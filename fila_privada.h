@@ -9,7 +9,7 @@ typedef struct fila {
 
 typedef struct noFila {
     void *dados;
-    noFila *ant;
+    noFila *prox;
 } noFila;
 
 int cheia(fila *f);
