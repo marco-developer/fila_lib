@@ -9,13 +9,14 @@ fila* criar(int tamanho_dados, int *resultado){
     
     if (!f) {
         printf("Erro ao criar fila!!\n");
-        // *resultado = 1;
-        exit(1);
+        *resultado = 1;
+        return;
     }
     f->inicio=NULL;
     f->fim=NULL;
     f->tamanho_dados = tamanho_dados;
     printf("Valor de f-tamdados: %d\n", f->tamanho_dados);
+    *resultado = 0;
     return f;
     
 }
@@ -24,8 +25,8 @@ void enfileirar(fila *f, void *elemento, int *resultado){
     
     if(f==NULL) {
         printf("Fila nao alocada!\n");
-        // *resultado=1;
-        exit(1);
+        *resultado=1;
+        return;
     }
 
     printf("Alocando noFila el!\n");
@@ -35,71 +36,81 @@ void enfileirar(fila *f, void *elemento, int *resultado){
 
     if(el==NULL) {
         printf("Falha na alocacao do elemento\n");
-        // *resultado=1;
-        exit(1);
+        *resultado=1;
+        return;
     }
 
-    printf("Definindo dados noFila el como elemento!\n");
+    printf("Definindo dados elemento novo como elemento passado!\n");
     el->dados = elemento;
-    printf("definindo ponteiro prox para el!\n");
-    el->prox = el;
+    printf("Definindo ponteiro prox do elemento novo para NULL!\n");
+    el->prox = NULL;
     
-    if(f->fim==NULL){
+    if(f->inicio==NULL){
+        printf("inicio eh null, entao inicio eh elemento novo");
         f->inicio=el;
     } else { 
+        printf("inicio nao e null, entao fim-prox = elemento novo");
         f->fim->prox=el;
         
     }
+    printf("Fim da fila vira novo elemento\n");
     f->fim=el;
     printf("\nValor no inicio da fila: %s\n", f->inicio);
-    printf("\nValor no fim da fila: %s\n", f->fim);
-    // *resultado = 0;
+    printf("Valor no fim da fila: %s\n\n", f->fim);
+    *resultado = 0;
 
 }
 
-void desefileirar(fila *f, void *item, int *resultado){
+void desefileirar(fila *f, int *resultado){
     
     noFila *el = malloc(sizeof(noFila));
-    el->dados = (void*) malloc(f->tamanho_dados);
-    // item = (void*) malloc(f->tamanho_dados);
+    // item = malloc(sizeof(noFila));
+    // el->dados = (void*) malloc(f->tamanho_dados);
 
     if(f==NULL) {
-        // *resultado=1;
+        printf("Fila nao alocada!\n");
+        *resultado=1;
         return;
     }
-    if(f->inicio==NULL){
-        // *resultado=1;
+    if(vazia(f)==0){
+        *resultado=1;
+        printf("Fila vazia!\n");
         return;
     }
 
+    printf("Valor de f-inicio: %s\n", f->inicio);
     el = f->inicio;
-    // item = el;
 
-    memcpy(item, f->inicio, f->tamanho_dados);
-    f->inicio = f->inicio->prox;
-    
-    if(f->inicio==NULL) f->fim=NULL;
+    printf("Valor de el: %s\n", el);
 
-    // printf("\nValor removido: %s\n", el->dados);
-    printf("\nValor no inicio da fila: %s\n", f->inicio);
-    printf("\nValor no fim da fila: %s\n", f->fim);
+    printf("Valor de f-inicio-prox: %s\n", f->inicio->prox);        
+    if(f->inicio->prox==NULL) {
+        
+        f->inicio=NULL;
+        f->fim=NULL; 
 
+    } else f->inicio = f->inicio->prox;
+
+    printf("\nValor removido: %s\n", el);
     free(el);
-    // *resultado=0;
+    *resultado=0;
 
 }
 
-void destruir (fila **f, int *resultado){
+void destruir (fila *f, int *resultado){
 
-    if((*f)!=NULL){
-        noFila *el;
-        while((*f)->inicio!=NULL) {
-            el = (*f)->inicio;
-            (*f)->inicio = (*f)->inicio->prox;
-            free(el);
-        }
-    free(f);
+    printf("Valor de f-inicio %s\n", f->inicio);
+
+    while(f->inicio!=NULL) {
+        
+        printf("desenfileirando...\n");
+        noFila *apagar = malloc(sizeof(noFila));
+        apagar = f->inicio;
+        f->inicio = f->inicio->prox;
+        free(apagar);
     }
+    free(f);
+    *resultado = 0;
 }
 
 int cheia(fila *f){
@@ -108,7 +119,7 @@ int cheia(fila *f){
 
 int vazia(fila *f){
 
-    if(f->fim==NULL) return 0; else return 1;
+    if(f->inicio==NULL) return 0; else return 1;
 
 }
 
@@ -121,18 +132,18 @@ void consultarpontas (fila *f, void *inicio, void *fim, int *resultado){
 
     if(f==NULL) {
         printf("Fila nao alocada!\n");
-        // *resultado=1;
+        *resultado=1;
         return;
     }
 
-    if(f->fim==NULL){
+    if(vazia(f)==0){
         printf("Fila vazia!\n");
     } else {    
         memcpy(inicio, f->inicio, f->tamanho_dados);
         memcpy(fim, f->fim, f->tamanho_dados);
 
     }
-    // *resultado = 0;
+    *resultado = 0;
 
 
 }
