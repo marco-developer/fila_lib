@@ -145,11 +145,15 @@ int cheia(pfila *f){
     
 }
 
+<<<<<<< HEAD
 int vazia(pfila *f){
 
     if(f->inicio==NULL) return 0; else return 1;
 
 }
+=======
+void consultarpontas (fila *f, void *inicio, void *fim, int *resultado){
+>>>>>>> d2851ab211f4adbb80a96f847e742e7d175d2892
 
 void consultarpontas (pfila *f, void *inicio, void *fim, int *resultado){
         
@@ -168,6 +172,7 @@ void consultarpontas (pfila *f, void *inicio, void *fim, int *resultado){
     }
     *resultado = 0;
 
+<<<<<<< HEAD
 
 }
 
@@ -198,3 +203,6 @@ int consultaqtd(pfila *f){
     printf("%d/%d espaços disponíveis na fila.\n", i, qtdmax); 
        
 }
+=======
+}
+>>>>>>> d2851ab211f4adbb80a96f847e742e7d175d2892
