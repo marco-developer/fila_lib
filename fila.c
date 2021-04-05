@@ -124,11 +124,6 @@ int vazia(fila *f){
 }
 
 void consultarpontas (fila *f, void *inicio, void *fim, int *resultado){
-        
-    // inicio = (noFila*) malloc(sizeof(noFila*));
-    // fim = (noFila*) malloc(sizeof(noFila*));
-
-
 
     if(f==NULL) {
         printf("Fila nao alocada!\n");
@@ -144,6 +139,5 @@ void consultarpontas (fila *f, void *inicio, void *fim, int *resultado){
 
     }
     *resultado = 0;
-
 
 }
