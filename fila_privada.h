@@ -5,12 +5,12 @@ typedef struct fila {
     noFila *inicio, *fim;
     int tamanho_dados;    
 
-} fila;
+} pfila;
 
 typedef struct noFila {
     void *dados;
     noFila *prox;
 } noFila;
 
-int cheia(fila *f);
-int vazia(fila *f);
+int cheia(pfila *f);
+int vazia(pfila *f);

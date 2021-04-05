@@ -3,9 +3,11 @@
 #include <string.h> 
 #include "fila_privada.h"
 
-fila* criar(int tamanho_dados, int *resultado){
+#define qtdmax 100
 
-    fila *f = (fila*)malloc(sizeof(fila));
+pfila* criar(int tamanho_dados, int *resultado){
+
+    pfila *f = (pfila*)malloc(sizeof(pfila));
     
     if (!f) {
         printf("Erro ao criar fila!!\n");
@@ -21,7 +23,7 @@ fila* criar(int tamanho_dados, int *resultado){
     
 }
 
-void enfileirar(fila *f, void *elemento, int *resultado){
+void enfileirar(pfila *f, void *elemento, int *resultado){
     
     if(f==NULL) {
         printf("Fila nao alocada!\n");
@@ -61,7 +63,7 @@ void enfileirar(fila *f, void *elemento, int *resultado){
 
 }
 
-void* desenfileirar(fila *f, int *resultado){
+void* desenfileirar(pfila *f, int *resultado){
     
     noFila *el = malloc(sizeof(noFila));
     // item = malloc(sizeof(noFila));
@@ -97,7 +99,7 @@ void* desenfileirar(fila *f, int *resultado){
     return el;
 }
 
-void destruir (fila *f, int *resultado){
+void destruir (pfila *f, int *resultado){
 
     // printf("Valor de f-inicio %s\n", f->inicio);
 
@@ -113,23 +115,44 @@ void destruir (fila *f, int *resultado){
     *resultado = 0;
 }
 
-int cheia(fila *f){
+int cheia(pfila *f){
+    
+    
+    noFila *el = malloc(sizeof(noFila));
 
+    if(f==NULL) {
+        printf("Fila nao alocada!\n");
+        return 1;
+    }
+    if(vazia(f)==0){
+        printf("Fila vazia!\n");
+        return 1;
+    }
+
+    int i=1;
+
+    el = f->inicio;
+    
+    while(el!=f->fim){
+
+        i++;
+        el = el->prox;
+
+    }
+
+    if(i<qtdmax) printf("%d espaços disponíveis na fila.\n", qtdmax-i); else printf("Nao ha mais espacos disponiveis na fila!\n");
+    printf("%d", i);
+    
 }
 
-int vazia(fila *f){
+int vazia(pfila *f){
 
     if(f->inicio==NULL) return 0; else return 1;
 
 }
 
-void consultarpontas (fila *f, void *inicio, void *fim, int *resultado){
+void consultarpontas (pfila *f, void *inicio, void *fim, int *resultado){
         
-    // inicio = (noFila*) malloc(sizeof(noFila*));
-    // fim = (noFila*) malloc(sizeof(noFila*));
-
-
-
     if(f==NULL) {
         printf("Fila nao alocada!\n");
         *resultado=1;
@@ -146,4 +169,32 @@ void consultarpontas (fila *f, void *inicio, void *fim, int *resultado){
     *resultado = 0;
 
 
+}
+
+int consultaqtd(pfila *f){
+    
+    
+    if(f==NULL) {
+        printf("Fila nao alocada!\n");
+        return 1;
+    }
+    if(vazia(f)==0){
+        printf("Fila vazia!\n");
+        return 1;
+    }
+
+    int i=1;
+    noFila *el = malloc(sizeof(noFila));
+
+    el = f->inicio;
+    
+    while(el!=f->fim){
+
+        i++;
+        el = el->prox;
+
+    }
+
+    printf("%d/%d espaços disponíveis na fila.\n", i, qtdmax); 
+       
 }
